@@ -16,23 +16,28 @@ interface mod {
 type restore_fn = () => void;
 
 declare const mod_api: {
-    /** @noSelf */
     logger: {
+        /** @noSelf */
         error(...args: any[]): void;
+        /** @noSelf */
         debug(...args: any[]): void;
+        /** @noSelf */
         info(...args: any[]): void;
+        /** @noSelf */
         warn(...args: any[]): void;
+        /** @noSelf */
         logs(): string[];
     },
 
-    /** @noSelf */
     mods: {
+        /** @noSelf */
         all(): mod[];
     },
 
-    /** @noSelf */
     hooks: {
+        /** @noSelf */
         detour(module: object, func: string, detour: (original: any, ...args: any[]) => any): restore_fn;
+        /** @noSelf */
         intercept_require(module: string, callback: (module: object) => void): restore_fn;
     },
 }
