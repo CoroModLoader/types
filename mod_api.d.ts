@@ -13,7 +13,11 @@ interface mod {
     enable(value: boolean): void;
 }
 
+type original_fn = (this: void, ...args: any[]) => any;
+
 type restore_fn = (this: void) => void;
+type intercept_fn = (this: void, module: any) => void;
+type detour_fn = (this: void, original: original_fn, ...args: any[]) => any;
 
 declare const mod_api: {
     logger: {
@@ -36,8 +40,8 @@ declare const mod_api: {
 
     hooks: {
         /** @noSelf */
-        detour(module: any, func: string, detour: (this: void, original: any, ...args: any[]) => any): restore_fn;
+        detour(module: any, func: string, detour: detour_fn): restore_fn;
         /** @noSelf */
-        intercept_require(module: string, callback: (this: void, module: any) => void): restore_fn;
+        intercept_require(module: string, callback: intercept_fn): restore_fn;
     },
 }
