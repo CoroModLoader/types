@@ -16,6 +16,7 @@ interface mod {
 type original_fn = (this: void, ...args: any[]) => any;
 
 type restore_fn = (this: void) => void;
+type mock_fn = (this: void, module: any) => any;
 type intercept_fn = (this: void, module: any) => void;
 type detour_fn = (this: void, original: original_fn, ...args: any[]) => any;
 
@@ -39,6 +40,8 @@ declare const mod_api: {
     },
 
     hooks: {
+        /** @noSelf */
+        mock_require(module: string, callback: mock_fn): restore_fn;
         /** @noSelf */
         detour(module: any, func: string, detour: detour_fn): restore_fn;
         /** @noSelf */
